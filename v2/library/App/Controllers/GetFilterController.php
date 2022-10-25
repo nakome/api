@@ -22,9 +22,9 @@ use Vendor\Utils\Utils as Utils;
 /**
  * Get public data
  *
- * [url]api/get/[dbname]/?public=1
- * [url]api/get/[dbname]/?public=1&limit=2
- * [url]api/get/[dbname]/?public=1&limit=2&offset=2
+ * [url]api/filter/[dbname]/?public=1
+ * [url]api/filter/[dbname]/?public=1&limit=2
+ * [url]api/filter/[dbname]/?public=1&limit=2&offset=2
  */
 class GetFilterController
 {

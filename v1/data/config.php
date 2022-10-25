@@ -15,7 +15,7 @@ defined('ACCESS') or die(ACCESSINFO);
 return [
     "url" => "http://localhost/api/v1",
     // bin2hex(random_bytes((50 - (50 % 2)) / 2));
-    "token" => "55f88217afd0eb63bb71749bd5241a2e91edd97658d6047fb2b0f9f303392aec83829814c2c9730a904a5568bdd0ddf03156c305bd2d03de5e09f5290f2de786",
+    "token" => "1234567890",
 
     "dbType" => "sqlite",
     "dbFile" => __DIR__ .'/data.db',

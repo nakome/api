@@ -39,7 +39,7 @@ class ResponseView
             if ($filter === "content") {
                 continue;
             }
-            $arr[] = $row[$filter];
+            $arr[$row['uid']] = $row[$filter];
         }
         return array_unique($arr);
     }

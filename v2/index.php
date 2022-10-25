@@ -11,7 +11,7 @@ define("URL","http://localhost/api/v1");
 define("TOKEN","1234567890");
 
 /* Database connection values */
-define("DB_TYPE", "mysql");// sqlite,mysql
+define("DB_TYPE", "sqlite");// sqlite,mysql
 define("DB_FILE", ROOT_DIR.'/data/data.db');
 define('DB_HOST', "localhost:3306"); //only for mysql
 define('DB_NAME', "demo"); //only for mysql

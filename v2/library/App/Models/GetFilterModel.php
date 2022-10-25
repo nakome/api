@@ -50,7 +50,7 @@ class GetFilterModel
 
         $this->getConnection();
 
-        $sql = "SELECT DISTINCT {$filter} FROM {$dbname} ORDER BY created DESC LIMIT {$limit} OFFSET {$offset}";
+        $sql = "SELECT DISTINCT uid,{$filter} FROM {$dbname} ORDER BY created DESC LIMIT {$limit} OFFSET {$offset}";
         $stmt = $this->__database->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();

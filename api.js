@@ -197,23 +197,7 @@ class Api {
       Authorization: `Bearer ${this.config.token}`,
     };
   }
-
-  /**
-   * Debug
-   *
-   * @param string name
-   * @param object data
-   */
-  debug(name, data) {
-    let txt = name ? name : "info";
-    console.clear();
-    console.time(name);
-    console.log(`[====== ${name} ======]`);
-    console.log(JSON.stringify(data, null, 2));
-    console.log("[=====================]");
-    console.timeEnd(name);
-  }
-
+  
   /**
    * Fetch data
    *
@@ -238,17 +222,6 @@ class Api {
     const response = await fetch(url, config);
     const output = response.text();
     return output ? output : {};
-  }
-
-
-  /**
-   * Sleep
-   *
-   * @param int milliseconds
-   * @return promise
-   */
-  sleep(milliseconds){
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
 }
 
