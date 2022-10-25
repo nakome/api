@@ -1,0 +1,65 @@
+## Mod Security
+# Anular reglas del Mod Security
+<IfModule mod_security.c>
+  SecRuleEngine Off
+  SecFilterInheritance Off
+  SecFilterEngine Off
+  SecFilterScanPOST Off
+  SecFilterCheckURLEncoding Off
+</IfModule>
+## Fin - Mod Security
+
+# mod rewrite options
+<IfModule mod_rewrite.c>
+
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+  	RewriteEngine On
+	#RewriteBase /
+	#ErrorDocument 404 /404.html
+	#RewriteCond %{HTTP:Authorization} ^(.+)$
+	#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+	#redireccionar 404
+  	RedirectMatch 404 /\\.git(/|$)
+  	RedirectMatch 404 /\\.env(/|$)
+
+	## Comienzo - Index
+	# Si la ruta y el archivo solicitado no es /index.php y la solicitud
+	# no ha sido ya reescrito internamente en el script index.php
+	RewriteCond %{REQUEST_URI} !^/index\.php
+	# y la ruta y el archivo solicitado no coincide directamente con un archivo físico
+	RewriteCond %{REQUEST_FILENAME} !-f
+	# y la ruta y el archivo solicitado no coincide directamente con una carpeta física
+	RewriteCond %{REQUEST_FILENAME} !-d
+	# Reescribir internamente la petición al script index.php
+	RewriteRule .* index.php [L]
+	## Fin - Index
+
+</IfModule>
+## Fin
+
+## Prohibido
+#  Prohibido obtener este archivo 
+<FilesMatch "prepros.config|\.(sqlite|db|md|yml)|(package|package-lock)\.json$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+  </IfModule>
+</FilesMatch>
+## Fin
+
+
+# Establecer 404 al acceder a estas carpetas
+RedirectMatch 404 /(content|tmp|node_modules)(/|$)
+
+## Prevenir la navegación y establecer los recursos por defecto
+Options -Indexes
+DirectoryIndex index.php index.html index.htm
+## Fin
+
+
