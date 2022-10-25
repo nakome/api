@@ -41,14 +41,26 @@ class ExistsTableModel
      */
     public function data(
         string $dbname
-    ): array {
+    ) {
 
-        $this->getConnection();
+        if(constant("DB_TYPE") == 'sqlite')
+        {
+            //mysql
+            $this->getConnection();
 
-        $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='{$dbname}'";
-        $stmt = $this->__database->prepare($query);
-        $stmt->execute();
-        $output = $stmt->fetchAll();
-        return $output;
+            $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='{$dbname}'";
+            $stmt = $this->__database->prepare($query);
+            $stmt->execute();
+            $output = $stmt->fetchAll();
+            return $output;
+        }else{
+            //mysql
+            //mysql
+            $this->getConnection();
+
+            $query = "SELECT * FROM {$dbname}";
+            $stmt = $this->__database->prepare($query);
+            return $stmt->execute();
+        }
     }
 }

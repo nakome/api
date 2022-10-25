@@ -11,11 +11,13 @@ define("URL","http://localhost/api/v1");
 define("TOKEN","55f88217afd0eb63bb71749bd5241a2e91edd97658d6047fb2b0f9f303392aec83829814c2c9730a904a5568bdd0ddf03156c305bd2d03de5e09f5290f2de786");
 
 /* Database connection values */
-define("DB_TYPE", "sqlite");
+define("DB_TYPE", "mysql");// sqlite,mysql
 define("DB_FILE", ROOT_DIR.'/data/data.db');
-define("DB_USER", "root");
-define("DB_PASS", "");
-
+define('DB_HOST', "localhost:3306"); //only for mysql
+define('DB_NAME', "demo"); //only for mysql
+define('DB_USER', 'root');//only for mysql
+define('DB_PASS', 'root');//only for mysql
+define('DB_CHARSET', 'utf8mb4');//only for mysql
 
 // Develoment true
 define('DEBUG', true);

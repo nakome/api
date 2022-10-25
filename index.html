@@ -6,21 +6,21 @@
   <title>Api test</title>
 
   <style>
-
-    :root{
-    --background: #102546;
-    --border: #07213a;
-    --color: #f9ff00;
+    :root {
+      --background: #102546;
+      --border: #07213a;
+      --color: #f9ff00;
     }
 
     body {
-        background: var(--border);
-        padding: 0;
-        box-sizing: border-box;
-        max-width:960px;
-        margin:0 auto;
+      background: var(--border);
+      padding: 0;
+      box-sizing: border-box;
+      max-width: 960px;
+      margin: 0 auto;
     }
-    .code{
+
+    .code {
       padding: 15px 10px;
       white-space: pre-wrap;
       word-break: break-word;
@@ -33,6 +33,7 @@
       box-sizing: border-box;
       position: relative;
     }
+
     .code::before {
       content: attr(data-lang) " ";
       position: absolute;
@@ -69,25 +70,25 @@
       await print('Testing api...');
       await print('Create table testing...');
       await A.create('testing').then(checkResult);
-      await A.sleep(2000);
+
       await print('Insert data testing...');
-      await A.insert('testing', { title: 'hello world',public: 1 }).then(checkResult);
-      await A.sleep(2000);
+      await A.insert('testing', { title: 'hello world', public: 1 }).then(checkResult);
+
       await print('Update data testing id 1...');
       await A.update('testing', 1, { title: 'hello world 1' }).then(checkResult);
-      await A.sleep(2000);
+
       await print('Get id 1...');
       await A.get('testing', 'uid=1').then(checkResult);
-      await A.sleep(2000);
+
       await print('Get public data');
       await A.get('testing', 'public=1').then(checkResult);
-      await A.sleep(2000);
+
       await print('Export data');
       await A.export('testing').then(r => print(r));
-      await A.sleep(2000);
+
       await print('Filter data');
       await A.filter('testing', 'created').then(checkResult);
-      await A.sleep(2000);
+
       await print('Delete data');
       //await A.delete('testing', {uid:'1', token: '2412c2b6a05e6294b7952b0fefa645bc'}).then(checkResult);
       await print('Drop data');
@@ -107,7 +108,7 @@
         textContent: JSON.stringify(txt, null, 2),
         id: uid(6)
       });
-      pre.setAttribute('data-lang','JSON');
+      pre.setAttribute('data-lang', 'JSON');
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: "smooth"
@@ -121,7 +122,7 @@
         textContent: txt,
         id: uid(6)
       });
-      pre.setAttribute('data-lang','JSON');
+      pre.setAttribute('data-lang', 'JSON');
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: "smooth"

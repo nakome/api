@@ -13,7 +13,6 @@ namespace App\Models;
  */
 defined('ACCESS') or exit(ACCESSINFO);
 
-use PDO;
 use Vendor\Database\Database as Database;
 
 /**
@@ -47,7 +46,7 @@ class CreateModel
         $this->getConnection();
 
         //SQLite
-        $sql = <<<STR
+        $sqliteSql = <<<STR
         CREATE TABLE IF NOT EXISTS '$dbname' (
             'uid'   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             'name' TEXT DEFAULT '$dbname title',
@@ -64,6 +63,24 @@ class CreateModel
         );
         STR;
 
-        return $this->__database->query($sql);
+        $mysqlSql = <<<STR
+        CREATE TABLE IF NOT EXISTS $dbname (
+            uid INT(11) NOT NULL AUTO_INCREMENT,
+            name VARCHAR(50) NOT NULL UNIQUE,
+            author VARCHAR(50) NULL DEFAULT 'Anonymous',
+            author_info VARCHAR(255) NULL DEFAULT '',
+            title VARCHAR(50) NULL DEFAULT '? title',
+            description VARCHAR(140) NULL DEFAULT '? description',
+            content JSON,
+            created DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+            updated DATETIME,
+            category VARCHAR(25) NULL DEFAULT 'default',
+            public INT(1) NULL DEFAULT 1,
+            token VARCHAR(50) NULL,
+            PRIMARY KEY (uid)
+        ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
+        STR;
+
+        return $this->__database->query((constant('DB_TYPE') == 'sqlite') ? $sqliteSql : $mysqlSql);
     }
 }

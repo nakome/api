@@ -28,21 +28,40 @@ class Database
      */
     public function connect(): object
     {
+
+        $dbtype = constant('DB_TYPE');
+        $host = constant('DB_HOST');
+        $db = constant('DB_NAME');
+        $user = constant('DB_USER');
+        $pass = constant('DB_PASS');
+        $charset = constant('DB_CHARSET');
+        $sqliteName = constant('DB_FILE');
+        $mysql = "mysql:host=$host;dbname=$db;charset=$charset";
+        $sqlite = "$dbtype:$sqliteName";
+        
         $pdo = null;
-        if (in_array(constant('DB_TYPE'), PDO::getAvailableDrivers())) {
+        if ($dbtype == 'sqlite') {
+            if (in_array(constant('DB_TYPE'), PDO::getAvailableDrivers())) {
+                try {
+                    $pdo = new PDO($sqlite, $user, $pass);
+                    $pdo->setAttribute(PDO::ATTR_PERSISTENT, PDO::ERRMODE_SILENT);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                } catch (\PDOException$e) {
+                    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+                }
+            } else {
+                throw new DatabaseDriverFailure("Database does not exist");
+            }
+        } else {
             try {
-                $name = constant('DB_FILE');
-                $user = constant('DB_USER');
-                $pass = constant('DB_PASS');
-                $pdo = new PDO("sqlite:$name", $user, $pass);
-                $pdo->setAttribute(PDO::ATTR_PERSISTENT, PDO::ERRMODE_SILENT);
+                $pdo = new PDO($mysql, $user, $pass);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException$e) {
                 throw new \PDOException($e->getMessage(), (int)$e->getCode());
             }
-        } else {
-            throw new DatabaseDriverFailure("Database does not exist");
         }
         return $pdo;
     }
