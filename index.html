@@ -70,26 +70,19 @@
       await print('Testing api...');
       await print('Create table testing...');
       await A.create('testing').then(checkResult);
-
       await print('Insert data testing...');
       await A.insert('testing', { title: 'hello world', public: 1 }).then(checkResult);
-
       await print('Update data testing id 1...');
       await A.update('testing', 1, { title: 'hello world 1' }).then(checkResult);
-
       await print('Get id 1...');
       await A.get('testing', 'uid=1').then(checkResult);
-
       await print('Get public data');
       await A.get('testing', 'public=1').then(checkResult);
-
       await print('Export data');
       await A.export('testing').then(r => print(r));
-
       await print('Filter data');
       await A.filter('testing', 'created').then(checkResult);
-
-      await print('Delete data');
+      //await print('Delete data');
       //await A.delete('testing', {uid:'1', token: '2412c2b6a05e6294b7952b0fefa645bc'}).then(checkResult);
       await print('Drop data');
       await A.drop('testing').then(checkResult);

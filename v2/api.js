@@ -14,7 +14,7 @@
  *    Api.get('testing','public=1').then((r) => A.debug('Get data',r));
  *    Api.get('testing','category=demo').then((r) => A.debug('Get data',r));
  *    Api.get('testing','updated=2022').then((r) => A.debug('Get data',r));
- *    Api.delete('testing',1).then(r => A.debug('Delete data',r));
+ *    Api.delete('testing',{uid:'1', token: '2412c2b6a05e6294b7952b0fefa645bc'}).then(r => A.debug('Delete data',r));
  *    Api.export('testing').then(r =>console.log(r))
  *    Api.filter('testing','created').then(r=> A.debug('Get all created date',r));
  * </code>
