@@ -43,7 +43,7 @@ class Database
         if ($dbtype == 'sqlite') {
             // check if not exists db file
             if (!file_exists($sqliteName) && !is_file($sqliteName)) {
-                mkdir($sqliteName);
+                file_put_contents($sqliteName,'');
             }
             if (in_array(constant('DB_TYPE'), PDO::getAvailableDrivers())) {
                 try {
