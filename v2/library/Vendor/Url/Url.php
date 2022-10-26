@@ -1,16 +1,9 @@
 <?php
 
-/*
- * Declara al principio del archivo, las llamadas a las funciones respetarán
- * estrictamente los indicios de tipo (no se lanzarán a otro tipo).
- */
 declare (strict_types = 1);
 
 namespace Vendor\Url;
 
-/*
- * Prevenir accesso
- */
 defined('ACCESS') or exit('Sorry, you dont have access file.');
 
 

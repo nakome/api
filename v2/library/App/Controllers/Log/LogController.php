@@ -1,16 +1,9 @@
 <?php
 
-/*
- * Declara al principio del archivo, las llamadas a las funciones respetarán
- * estrictamente los indicios de tipo (no se lanzarán a otro tipo).
- */
 declare (strict_types = 1);
 
 namespace App\Controllers\Log;
 
-/*
- * Prevenir accesso
- */
 defined('ACCESS') or exit(ACCESSINFO);
 
 use App\Views\MessageView as MessageView;
@@ -43,7 +36,7 @@ class LogController
                 unlink($logFile);
                 MessageView::setMsg("Success, the log is clean");
                 exit();
-            }else{
+            } else {
                 exit(die("The file not exists!"));
             }
         } else {
@@ -67,7 +60,7 @@ class LogController
             $logFile = ROOT_DIR . '/log.txt';
             if (file_exists($logFile) && is_file($logFile)) {
                 exit(die(file_get_contents($logFile, true)));
-            }else{
+            } else {
                 exit(die("The file not exists!"));
             }
         } else {

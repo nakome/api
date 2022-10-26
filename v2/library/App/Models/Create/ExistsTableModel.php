@@ -1,16 +1,9 @@
 <?php
 
-/*
- * Declara al principio del archivo, las llamadas a las funciones respetarán
- * estrictamente los indicios de tipo (no se lanzarán a otro tipo).
- */
 declare (strict_types = 1);
 
 namespace App\Models\Create;
 
-/*
- * Prevenir accesso
- */
 defined('ACCESS') or exit(ACCESSINFO);
 
 use Vendor\Database\Database as Database;
@@ -43,8 +36,7 @@ class ExistsTableModel
         string $dbname
     ) {
 
-        if(constant("DB_TYPE") == 'sqlite')
-        {
+        if (constant("DB_TYPE") == 'sqlite') {
             //mysql
             $this->getConnection();
 
@@ -53,7 +45,7 @@ class ExistsTableModel
             $stmt->execute();
             $output = $stmt->fetchAll();
             return $output;
-        }else{
+        } else {
             //mysql
             //mysql
             $this->getConnection();

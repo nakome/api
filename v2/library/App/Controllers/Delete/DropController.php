@@ -1,19 +1,11 @@
 <?php
 
-/*
- * Declara al principio del archivo, las llamadas a las funciones respetarán
- * estrictamente los indicios de tipo (no se lanzarán a otro tipo).
- */
 declare (strict_types = 1);
 
 namespace App\Controllers\Delete;
 
-/*
- * Prevenir accesso
- */
 defined('ACCESS') or exit(ACCESSINFO);
 
-use App\Models\Create\ExistsTableModel as ExistsTableModel;
 use App\Models\Delete\DropModel as DropModel;
 use App\Views\MessageView as MessageView;
 use Vendor\Auth\Auth as Auth;

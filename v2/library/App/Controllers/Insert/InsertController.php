@@ -1,16 +1,9 @@
 <?php
 
-/*
- * Declara al principio del archivo, las llamadas a las funciones respetarán
- * estrictamente los indicios de tipo (no se lanzarán a otro tipo).
- */
 declare (strict_types = 1);
 
 namespace App\Controllers\Insert;
 
-/*
- * Prevenir accesso
- */
 defined('ACCESS') or exit(ACCESSINFO);
 
 use App\Models\Insert\InsertModel as InsertModel;
@@ -68,7 +61,7 @@ class InsertController
                     MessageView::setMsg($msg);
                 } else {
                     $msg = "Error, the data on {$dbname} has not saved!";
-                    Utils::log("Post data {$dbname}", (string) $msg);
+                    Utils::log("Post data {$dbname}", (string)$msg);
                     MessageView::setMsg($msg);
                 }
             }
