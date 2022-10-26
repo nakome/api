@@ -104,10 +104,12 @@ class RouteController
                 MessageView::setError($errorMsg);
                 break;
             case 'export':
-                ExportController::data($dbname);
-
-                // set error message if not call controller
-                MessageView::setError($errorMsg);
+                if ($dbname) {
+                    ExportController::data($dbname);
+                } else {
+                    // set error message if not call controller
+                    MessageView::setError($errorMsg);
+                }
                 break;
             case 'drop':
                 DropController::data($dbname);
@@ -116,8 +118,7 @@ class RouteController
                 MessageView::setError($errorMsg);
                 break;
             default:
-
-            // set error message if not call controller
+                // set error message if not call controller
                 MessageView::setError($errorMsg);
                 break;
         }

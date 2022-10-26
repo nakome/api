@@ -7,9 +7,9 @@
 
   <style>
     :root {
-      --background: #102546;
-      --border: #07213a;
-      --color: #f9ff00;
+      --background: #eceff1;
+      --border: #607d8b;
+      --color: #263238;
     }
 
     body {
@@ -49,6 +49,20 @@
       border-top: 0;
       border-right: 0;
     }
+
+    .info{
+      padding: 5px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 2px solid var(--color);
+      background: var(--color);
+      color: var(--background);
+      border-radius: 2px;
+      margin: 10px;
+      width: calc(100% - 20px);
+      box-sizing: border-box;
+      position: relative;
+    }
   </style>
 </head>
 
@@ -57,21 +71,31 @@
   <div id="output"></div>
 
   <script type="text/javascript" src="./api.js"></script>
-  <script>
+  <script type="text/javascript" rel="javascript">
 
     let output = document.getElementById('output');
 
+    /**
+     * Init api
+     */
     const A = new Api({
       url: "http://localhost/api/v2",
       token: "1234567890",
     });
 
+    /**
+     * Run tasks
+     */
     const runTasks = async () => {
       await print('Testing api...');
       await print('Create table testing...');
       await A.create('testing').then(checkResult);
       await print('Insert data testing...');
       await A.insert('testing', { title: 'hello world', public: 1 }).then(checkResult);
+      await A.insert('testing', { title: 'hello world 2', public: 1 }).then(checkResult);
+      await A.insert('testing', { title: 'hello world 3', public: 0 }).then(checkResult);
+      await A.insert('testing', { title: 'hello world 4', public: 0 }).then(checkResult);
+      await A.insert('testing', { title: 'hello world 5', public: 1 }).then(checkResult);
       await print('Update data testing id 1...');
       await A.update('testing', 1, { title: 'hello world 1' }).then(checkResult);
       await print('Get id 1...');
@@ -88,12 +112,23 @@
       await A.drop('testing').then(checkResult);
     }
 
+    // run tasks
     runTasks();
 
+    /**
+     * Check result
+     * 
+     * @param string txt
+     */
     function checkResult(r) {
       return (r.STATUS === '200') ? printR(r) : print('Error')
     }
 
+    /**
+     * Print text
+     * 
+     * @param string txt
+     */
     async function printR(txt) {
       let output = document.getElementById('output');
       let pre = createElement('pre', output, {
@@ -108,10 +143,15 @@
       });
     }
 
+    /**
+     * Print text
+     * 
+     * @param string txt
+     */
     async function print(txt) {
       let output = document.getElementById('output');
-      let pre = createElement('pre', output, {
-        className: 'code',
+      let pre = createElement('p', output, {
+        className: 'info',
         textContent: txt,
         id: uid(6)
       });
