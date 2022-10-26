@@ -20,45 +20,37 @@ use Vendor\Url\Url as Url;
  */
 class MessageView
 {
+
+    /**
+     * Default array output
+     *
+     * @return array
+     */
+    private static function __defaultArray(): array
+    {
+        return [
+            'STATUS' => 200,
+            'IP' => Url::getIp(),
+            'HTTP_HOST' => $_SERVER['HTTP_HOST'],
+            'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
+            'MESSAGE' => '',
+            'PARAMS' => $_GET,
+            'DATA' => $_POST,
+        ];
+    }
+
     /**
      * Set message
      *
      * @param string $message
      * @return void
      */
-    public static function setMsg(string $message)
+    public static function setMsg(string $message, string $status = "200")
     {
         @header('Content-type: application/json');
-        $arr = [
-            'STATUS' => 200,
-            'IP' => Url::getIp(),
-            'HTTP_HOST' => $_SERVER['HTTP_HOST'],
-            'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-            'MESSAGE' => $message,
-            'PARAMS' => $_GET,
-            'DATA' => $_POST,
-        ];
-        exit(json_encode($arr));
-    }
-
-    /**
-     * Set Error message
-     *
-     * @param string $message
-     * @return void
-     */
-    public static function setError(string $message)
-    {
-        @header('Content-type: application/json');
-        $arr = [
-            'STATUS' => 404,
-            'IP' => Url::getIp(),
-            'HTTP_HOST' => $_SERVER['HTTP_HOST'],
-            'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-            'MESSAGE' => $message,
-            'PARAMS' => $_GET,
-            'DATA' => $_POST,
-        ];
+        $arr = self::__defaultArray();
+        $arr['STATUS'] = $status;
+        $arr['MESSAGE'] = $message;
         exit(json_encode($arr));
     }
 }

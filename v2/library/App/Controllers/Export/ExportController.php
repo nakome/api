@@ -37,22 +37,13 @@ class ExportController
         $auth = new Auth();
         // [url]api/insert/[dbname]
         if ($auth->check()) {
-            $ExistsTableModel = new ExistsTableModel();
-            if ($ExistsTableModel->data($dbname)) {
-                try {
-                    $ExportModel = new ExportModel();
-                    $output = $ExportModel->data($dbname);
-                    $msg = "Success, table {$dbname} has been exported!";
-                    Utils::log("Export {$dbname}", (string)$msg);
-                } catch (Exception $e) {
-                    MessageView::setError($e->getMessage());
-                }
-            } else {
-                $msg = "Error, table {$dbname} not exists!";
-                Utils::log("Post data {$dbname}", (string)$msg);
-                ResponseView::json([
-                    'MESSAGE' => $msg,
-                ]);
+            try {
+                $ExportModel = new ExportModel();
+                $output = $ExportModel->data($dbname);
+                $msg = "Success, table {$dbname} has been exported!";
+                Utils::log("Export {$dbname}", (string)$msg);
+            } catch (Exception $e) {
+                MessageView::setMsg($e->getMessage());
             }
         }
     }

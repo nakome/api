@@ -43,6 +43,8 @@ class LogController
                 unlink($logFile);
                 MessageView::setMsg("Success, the log is clean");
                 exit();
+            }else{
+                exit(die("The file not exists!"));
             }
         } else {
             MessageView::setMsg("Error, You don't have access here.");

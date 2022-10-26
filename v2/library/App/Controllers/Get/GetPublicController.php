@@ -61,11 +61,11 @@ class GetPublicController
                 } else {
                     $msg = "Error to obtain data from {$dbname}";
                     Utils::log("Get public {$dbname}", (string)$msg);
-                    MessageView::setError($msg);
+                    MessageView::setMsg($msg);
                 }
 
             } catch (Exception $e) {
-                MessageView::setError($e->getMessage());
+                MessageView::setMsg($e->getMessage());
             }
         }
     }

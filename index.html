@@ -87,6 +87,16 @@
      * Run tasks
      */
     const runTasks = async () => {
+
+      await print('=============== Errors ===============');
+      await A.create('testing').then(r => printR(r));
+      await A.insert('texting', { title: 'hello world', public: 1 }).then(checkResult);
+      await A.drop('texting').then(r => printR(r));
+      await A.export('texting').then(r => print(r));
+      await A.filter('texting', 'created').then(checkResult);
+      await print('=========== Finish Errors ============');
+
+      await print('=============== Requests ===============');
       await print('Testing api...');
       await print('Create table testing...');
       await A.create('testing').then(checkResult);
@@ -106,16 +116,20 @@
       await A.export('testing').then(r => print(r));
       await print('Filter data');
       await A.filter('testing', 'created').then(checkResult);
-      //await print('Delete data');
-      //await A.delete('testing', {uid:'1', token: '2412c2b6a05e6294b7952b0fefa645bc'}).then(checkResult);
+      await print('Delete data');
+      await A.delete('testing', {uid:'1', token: '2412c2b6a05e6294b7952b0fefa645bc'}).then(checkResult);
       await print('Drop data');
       await A.drop('testing').then(checkResult);
+      await print('=========== Finish Requests ============');
+
+      await print('=============== Utils ===============');
       await print('Show Log');
       await A.log('show').then(r => print(r));
       await print('Clean Log');
       await A.log('clean').then(r => print(r));
       await print('Generate Token');
       await A.token('generate').then(r => print(r));
+      await print('=========== Finish Utils ============');
     }
 
     // run tasks

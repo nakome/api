@@ -15,7 +15,7 @@ defined('ACCESS') or exit(ACCESSINFO);
 
 use App\Models\Get\GetUidModel as GetUidModel;
 use App\Models\Update\UpdateModel as UpdateModel;
-use App\Views\ResponseView as ResponseView;
+use App\Views\MessageView as MessageView;
 use Vendor\Auth\Auth as Auth;
 use Vendor\Url\Url as Url;
 use Vendor\Utils\Utils as Utils;
@@ -78,24 +78,16 @@ class UpdateController
                     if ($result) {
                         $msg = "Success, the data on {$dbname} has been updated!";
                         Utils::log("Post data {$dbname}", (string)$msg);
-                        ResponseView::json([
-                            'STATUS' => $_SERVER['REDIRECT_STATUS'] ?? 200,
-                            'IP' => Url::getIp(),
-                            'HTTP_HOST' => $_SERVER['HTTP_HOST'],
-                            'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-                            'MESSAGE' => $msg,
-                            'PARAMS' => $_GET,
-                            'DATA' => $_POST,
-                        ]);
+                        MessageView::setMsg($msg);
                     } else {
                         $msg = "Error, the data on {$dbname} has not updated!";
                         Utils::log("Post data {$dbname}", (string)$msg);
-                        ResponseView::json(['MESSAGE' => $msg]);
+                        MessageView::setMsg($msg);
                     }
                 } else {
                     $msg = "Error, the data on {$dbname} has not updated!";
                     Utils::log("Post data {$dbname}", (string)$msg);
-                    ResponseView::json(['MESSAGE' => $msg]);
+                    MessageView::setMsg($msg);
                 }
             }
         }

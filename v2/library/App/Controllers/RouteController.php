@@ -29,11 +29,11 @@ use App\Controllers\Get\GetTokenController as GetTokenController;
 use App\Controllers\Get\GetUidController as GetUidController;
 use App\Controllers\Get\GetUpdatedController as GetUpdatedController;
 use App\Controllers\Insert\InsertController as InsertController;
-use App\Controllers\Update\UpdateController as UpdateController;
 use App\Controllers\Log\LogController as LogController;
 use App\Controllers\Token\TokenController as TokenController;
+use App\Controllers\Update\UpdateController as UpdateController;
+use App\Models\Create\ExistsTableModel as ExistsTableModel;
 use App\Views\MessageView as MessageView;
-use Vendor\Auth\Auth as Auth;
 use Vendor\Url\Url as Url;
 
 /**
@@ -41,6 +41,24 @@ use Vendor\Url\Url as Url;
  */
 class RouteController
 {
+
+    /**
+     * Check if the table exists
+     *
+     * @param string $dbname
+     * @return boolean
+     */
+    private static function __checkIfTableExists(
+        string $dbname
+    ): bool {
+        // check if exists the table $dbname
+        $ExistsTableModel = new ExistsTableModel();
+        if ($ExistsTableModel->data($dbname)) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Create Router Control
      *
@@ -62,63 +80,83 @@ class RouteController
 
         switch ($type) {
             case 'create':
-                CreateController::data($dbname);
-
+                if (!self::__checkIfTableExists($dbname)) {
+                    CreateController::data($dbname);
+                } else {
+                    MessageView::setMsg("The table {$dbname} already exists!");
+                }
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
             case 'insert':
-                InsertController::data($dbname);
-
+                if (self::__checkIfTableExists($dbname)) {
+                    InsertController::data($dbname);
+                } else {
+                    MessageView::setMsg("The table {$dbname} not exists!");
+                }
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
             case 'update':
-                UpdateController::data($dbname);
-
+                if (self::__checkIfTableExists($dbname)) {
+                    UpdateController::data($dbname);
+                } else {
+                    MessageView::setMsg("The table {$dbname} not exists!");
+                }
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
             case 'delete':
-                DeleteController::data($dbname);
-
+                if (self::__checkIfTableExists($dbname)) {
+                    DeleteController::data($dbname);
+                } else {
+                    MessageView::setMsg("The table {$dbname} not exists!");
+                }
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
             case 'get':
-                GetAllController::data($dbname);
-                GetUidController::data($dbname);
-                GetNameController::data($dbname);
-                GetTokenController::data($dbname);
-                GetAuthorController::data($dbname);
-                GetCategoryController::data($dbname);
-                GetTitleController::data($dbname);
-                GetCreatedController::data($dbname);
-                GetUpdatedController::data($dbname);
-                GetPublicController::data($dbname);
-
+                if (self::__checkIfTableExists($dbname)) {
+                    GetAllController::data($dbname);
+                    GetUidController::data($dbname);
+                    GetNameController::data($dbname);
+                    GetTokenController::data($dbname);
+                    GetAuthorController::data($dbname);
+                    GetCategoryController::data($dbname);
+                    GetTitleController::data($dbname);
+                    GetCreatedController::data($dbname);
+                    GetUpdatedController::data($dbname);
+                    GetPublicController::data($dbname);
+                } else {
+                    MessageView::setMsg("The table {$dbname} not exists!");
+                }
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
             case 'filter':
-                GetFilterController::data($dbname);
-
+                if (self::__checkIfTableExists($dbname)) {
+                    GetFilterController::data($dbname);
+                } else {
+                    MessageView::setMsg("The table {$dbname} not exists!");
+                }
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
             case 'export':
-                if ($dbname) {
+                if (self::__checkIfTableExists($dbname)) {
                     ExportController::data($dbname);
                 } else {
-                    // set error message if not call controller
-                    MessageView::setError($errorMsg);
+                    MessageView::setMsg("The table {$dbname} not exists!");
                 }
                 break;
             case 'drop':
-                DropController::data($dbname);
-
+                if (self::__checkIfTableExists($dbname)) {
+                    DropController::data($dbname);
+                } else {
+                    MessageView::setMsg("The table {$dbname} not exists!");
+                }
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
             case 'token':
                 TokenController::options($dbname);
@@ -128,7 +166,7 @@ class RouteController
                 break;
             default:
                 // set error message if not call controller
-                MessageView::setError($errorMsg);
+                MessageView::setMsg($errorMsg);
                 break;
         }
         exit(1);

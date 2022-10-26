@@ -14,7 +14,8 @@ namespace App\Controllers\Create;
 defined('ACCESS') or exit(ACCESSINFO);
 
 use App\Models\Create\CreateModel as CreateModel;
-use App\Views\ResponseView as ResponseView;
+use App\Models\Create\ExistsTableModel as ExistsTableModel;
+use App\Views\MessageView as MessageView;
 use Vendor\Auth\Auth as Auth;
 use Vendor\Url\Url as Url;
 use Vendor\Utils\Utils as Utils;
@@ -38,7 +39,6 @@ class CreateController
         // inicialize auth
         $auth = new Auth();
         if ($auth->check()) {
-
             // inicialize CreateModel
             $CreateModel = new CreateModel();
             $output = $CreateModel->data($dbname);
@@ -46,27 +46,11 @@ class CreateController
             if ($output) {
                 $msg = "Success, the table {$dbname} has been created!";
                 Utils::log("Create {$dbname}", (string)$msg);
-                ResponseView::json([
-                    'STATUS' => $_SERVER['REDIRECT_STATUS'] ?? 200,
-                    'IP' => Url::getIp(),
-                    'HTTP_HOST' => $_SERVER['HTTP_HOST'],
-                    'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-                    'MESSAGE' => $msg,
-                    'PARAMS' => $_GET,
-                    'DATA' => $_POST,
-                ]);
+                MessageView::setMsg($msg);
             } else {
                 $msg = "Error, the table {$dbname} has not created!";
                 Utils::log("Delete data {$dbname}", (string)$msg);
-                ResponseView::json([
-                    'STATUS' => 404,
-                    'IP' => Url::getIp(),
-                    'HTTP_HOST' => $_SERVER['HTTP_HOST'],
-                    'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-                    'MESSAGE' => $msg,
-                    'PARAMS' => $_GET,
-                    'DATA' => $_POST,
-                ]);
+                MessageView::setMsg($msg);
             }
 
         }

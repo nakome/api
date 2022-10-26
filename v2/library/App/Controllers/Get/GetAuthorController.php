@@ -56,13 +56,13 @@ class GetAuthorController
                     );
                 } else {
                     Utils::log("Get author {$dbname}", (string) "Error to obtain data from {$dbname}");
-                    MessageView::setError(
+                    MessageView::setMsg(
                         "Error to obtain data from {$dbname}"
                     );
                 }
 
             } catch (Exception $e) {
-                MessageView::setError($e->getMessage());
+                MessageView::setMsg($e->getMessage());
             }
         }
     }
