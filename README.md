@@ -117,3 +117,14 @@ Api.export('testing').then(r =>console.log(r))
 // Delete table
 Api.drop('testing').then(r =>console.log(r))
 ```
+
+**Utils:**
+
+```Javascript
+// Show log
+Api.log('show').then(r => print(r));
+// Clean log
+Api.log('clean').then(r => print(r));
+// Generate bearer token
+Api.token('generate').then(r => print(r));
+```
