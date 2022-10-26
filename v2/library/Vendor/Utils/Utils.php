@@ -11,7 +11,7 @@ namespace Vendor\Utils;
 /*
  * Prevenir accesso
  */
-defined('ACCESS') or exit(ACCESSINFO);
+defined('ACCESS') or exit('Sorry, you dont have access file.');
 
 /**
  * Utils
@@ -85,13 +85,17 @@ class Utils
         $logFile = ROOT_DIR . '/log.txt';
         if (DEBUG) {
             $fileOpen = fopen($logFile, 'a+') or die("Can't open file.");
-            $body = "\n == {$name}\n";
-            $body .= $data." - ".date('d/m/Y H:m:s');
+            $body = "\n========== {$name} ==========\n";
+            $body .= "== " . $data . "\n";
+            $body .= "== Date:" . date('d/m/Y H:m:s');
+
+            // create line with body length
+            $divider = str_repeat('=', strlen($name));
+            $body .= "\n==========={$divider}===========\n";
+
             fwrite($fileOpen, $body);
             fclose($fileOpen);
-        }
-
-        if (!DEBUG) {
+        } else {
             if (file_exists($logFile) && is_file($logFile)) {
                 unlink($logFile);
             }

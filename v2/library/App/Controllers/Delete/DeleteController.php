@@ -13,7 +13,6 @@ namespace App\Controllers\Delete;
  */
 defined('ACCESS') or exit(ACCESSINFO);
 
-use App\Models\Get\GetUidModel as GetUidModel;
 use App\Models\Delete\DeleteModel as DeleteModel;
 use App\Views\ResponseView as ResponseView;
 use Vendor\Auth\Auth as Auth;
@@ -22,7 +21,7 @@ use Vendor\Utils\Utils as Utils;
 
 /**
  * Update controller
- * 
+ *
  * [url]api/delete/[dbname]
  */
 class DeleteController
@@ -43,7 +42,7 @@ class DeleteController
         if ($auth->check() && $_SERVER['REQUEST_METHOD'] == 'POST') {
             // get post json params
             $_POST = json_decode(file_get_contents('php://input'), true);
-            
+
             // post params
             $uid = (isset($_POST['uid'])) ? urldecode($_POST['uid']) : false;
             $token = (isset($_POST['token'])) ? urldecode($_POST['token']) : false;
@@ -53,28 +52,30 @@ class DeleteController
 
                 // init DeleteModel
                 $DeleteModel = new DeleteModel();
-                $output = $DeleteModel->data($dbname, $uid,$token);
+                $output = $DeleteModel->data($dbname, $uid, $token);
 
                 // if output
                 if ($output) {
-                    Utils::log("Delete data {$dbname}", (string) "Success delete data");
+                    $msg = "Success, the data on {$dbname} has been deleted!";
+                    Utils::log("Delete data {$dbname}", (string)$msg);
                     ResponseView::json([
                         'STATUS' => $_SERVER['REDIRECT_STATUS'] ?? 200,
                         'IP' => Url::getIp(),
                         'HTTP_HOST' => $_SERVER['HTTP_HOST'],
                         'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-                        'MESSAGE' => "Success, the data on {$dbname} has been deleted!",
+                        'MESSAGE' => $msg,
                         'PARAMS' => $_GET,
                         'DATA' => $_POST,
                     ]);
                 } else {
-                    Utils::log("Delete data {$dbname}", (string) "Error delete data");
+                    $msg = "Error, the data on {$dbname} has not deleted!";
+                    Utils::log("Delete data {$dbname}", (string)$msg);
                     ResponseView::json([
                         'STATUS' => 404,
                         'IP' => Url::getIp(),
                         'HTTP_HOST' => $_SERVER['HTTP_HOST'],
                         'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-                        'MESSAGE' => "Error, the data on {$dbname} has not deleted!",
+                        'MESSAGE' => $msg,
                         'PARAMS' => $_GET,
                         'DATA' => $_POST,
                     ]);

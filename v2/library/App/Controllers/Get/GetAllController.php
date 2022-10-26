@@ -50,15 +50,15 @@ class GetAllController
 
                 // if output
                 if ($output) {
-                    Utils::log("Get all {$dbname}", (string) "Success get all");
+                    $msg = "Success to obtain data from {$dbname}";
+                    Utils::log("Get all {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::full($output)
                     );
                 } else {
-                    Utils::log("Get all {$dbname}", (string) "Error on get all");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get all {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
 
             } catch (Exception $e) {

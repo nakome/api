@@ -42,14 +42,16 @@ class ExportController
                 try {
                     $ExportModel = new ExportModel();
                     $output = $ExportModel->data($dbname);
-                    Utils::log("Export {$dbname}", (string) "Success export table");
+                    $msg = "Success, table {$dbname} has been exported!";
+                    Utils::log("Export {$dbname}", (string)$msg);
                 } catch (Exception $e) {
                     MessageView::setError($e->getMessage());
                 }
             } else {
-                Utils::log("Post data {$dbname}", (string) "Error export data");
+                $msg = "Error, table {$dbname} not exists!";
+                Utils::log("Post data {$dbname}", (string)$msg);
                 ResponseView::json([
-                    'MESSAGE' => "Error, table {$dbname} not exists!",
+                    'MESSAGE' => $msg,
                 ]);
             }
         }

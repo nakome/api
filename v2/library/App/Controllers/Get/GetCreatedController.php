@@ -19,10 +19,9 @@ use App\Views\ResponseView as ResponseView;
 use Vendor\Auth\Auth as Auth;
 use Vendor\Utils\Utils as Utils;
 
-
 /**
  * Get created data
- * 
+ *
  * [url]api/get/[dbname]/?created=name
  * [url]api/get/[dbname]/?created=adfasdf&limit=2
  * [url]api/get/[dbname]/?created=adsfads&limit=2&offset=2
@@ -53,15 +52,15 @@ class GetCreatedController
                 $GetCreatedModel = new GetCreatedModel();
                 $output = $GetCreatedModel->data($dbname, $created, $limit, $offset);
                 if ($output) {
-                    Utils::log("Get created {$dbname}", (string) "Success get created");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get created {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::full($output)
                     );
                 } else {
-                    Utils::log("Get created {$dbname}", (string) "Error on get created");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get created {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
 
             } catch (Exception $e) {

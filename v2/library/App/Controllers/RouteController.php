@@ -30,6 +30,7 @@ use App\Controllers\Get\GetUidController as GetUidController;
 use App\Controllers\Get\GetUpdatedController as GetUpdatedController;
 use App\Controllers\Insert\InsertController as InsertController;
 use App\Controllers\Update\UpdateController as UpdateController;
+use App\Views\MessageView as MessageView;
 use Vendor\Url\Url as Url;
 
 /**
@@ -53,18 +54,33 @@ class RouteController
 
         Url::cors();
 
+        // Error message if not run calling controller
+        $errorMsg = "Error specifying access address, try [create,insert,update,delete,get,filter,export,drop]";
+
         switch ($type) {
             case 'create':
                 CreateController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             case 'insert':
                 InsertController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             case 'update':
                 UpdateController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             case 'delete':
                 DeleteController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             case 'get':
                 GetAllController::data($dbname);
@@ -77,18 +93,32 @@ class RouteController
                 GetCreatedController::data($dbname);
                 GetUpdatedController::data($dbname);
                 GetPublicController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             case 'filter':
                 GetFilterController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             case 'export':
                 ExportController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             case 'drop':
                 DropController::data($dbname);
+
+                // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
             default:
-                echo 'hola';
+
+            // set error message if not call controller
+                MessageView::setError($errorMsg);
                 break;
         }
         exit(1);

@@ -56,15 +56,15 @@ class GetUpdatedController
 
                 // output
                 if ($output) {
-                    Utils::log("Get updated {$dbname}", (string) "Success get updated");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get updated {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::full($output)
                     );
                 } else {
-                    Utils::log("Get updated {$dbname}", (string) "Error on get updated");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get updated {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
 
             } catch (Exception $e) {

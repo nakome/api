@@ -64,15 +64,15 @@ class GetFilterController
 
                     // output
                     if ($output) {
-                        Utils::log("Filter data {$dbname}", (string) "Success filter data");
+                        $msg = "Success, to obtain data from {$dbname}";
+                        Utils::log("Filter data {$dbname}", (string)$msg);
                         ResponseView::json(
                             ResponseView::filter($filter, $output)
                         );
                     } else {
-                        Utils::log("Filter data {$dbname}", (string) "Error filter data");
-                        MessageView::setError(
-                            "Error to filter data from {$dbname}"
-                        );
+                        $msg = "Error to filter data from {$dbname}";
+                        Utils::log("Filter data {$dbname}", (string)$msg);
+                        MessageView::setError($msg);
                     }
                 }
 

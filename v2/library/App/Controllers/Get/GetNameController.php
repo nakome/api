@@ -50,15 +50,15 @@ class GetNameController
 
                 // if output
                 if ($output) {
-                    Utils::log("Get name {$dbname}", (string) "Success get name");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get name {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::single($output)
                     );
                 } else {
-                    Utils::log("Get name {$dbname}", (string) "Error get name");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get name {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
             } catch (Exception $e) {
                 MessageView::setError($e->getMessage());

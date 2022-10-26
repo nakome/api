@@ -21,7 +21,7 @@ use Vendor\Utils\Utils as Utils;
 
 /**
  * Get category data
- * 
+ *
  * [url]api/get/[dbname]/?category=name
  * [url]api/get/[dbname]/?category=adfasdf&limit=2
  * [url]api/get/[dbname]/?category=adsfads&limit=2&offset=2
@@ -51,15 +51,15 @@ class GetCategoryController
                 $GetCategoryModel = new GetCategoryModel();
                 $output = $GetCategoryModel->data($dbname, $category, $limit, $offset);
                 if ($output) {
-                    Utils::log("Get category {$dbname}", (string) "Success get category");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get category {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::full($output)
                     );
                 } else {
-                    Utils::log("Get category {$dbname}", (string) "Error on get category");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get category {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
 
             } catch (Exception $e) {

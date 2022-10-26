@@ -21,7 +21,7 @@ use Vendor\Utils\Utils as Utils;
 
 /**
  * Get public data
- * 
+ *
  * [url]api/get/[dbname]/?public=1
  * [url]api/get/[dbname]/?public=1&limit=2
  * [url]api/get/[dbname]/?public=1&limit=2&offset=2
@@ -42,26 +42,26 @@ class GetPublicController
         // check auth
         if (array_key_exists('public', $_GET)) {
             try {
-                
+
                 // get params
                 $limit = (isset($_GET["limit"])) ? (string)urldecode($_GET["limit"]) : (string) 15;
                 $offset = (isset($_GET["offset"])) ? (string)urldecode($_GET["offset"]) : (string) 0;
-                
+
                 // new model
                 $GetPublicModel = new GetPublicModel();
                 $output = $GetPublicModel->data($dbname, $limit, $offset);
 
                 // output
                 if ($output) {
-                    Utils::log("Get public {$dbname}", (string) "Success get public");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get public {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::full($output)
                     );
                 } else {
-                    Utils::log("Get public {$dbname}", (string) "Error on get public");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get public {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
 
             } catch (Exception $e) {

@@ -21,7 +21,7 @@ use Vendor\Utils\Utils as Utils;
 
 /**
  * Get author data
- * 
+ *
  * [url]api/get/[dbname]/?author=name
  * [url]api/get/[dbname]/?author=adfasdf&limit=2
  * [url]api/get/[dbname]/?author=adsfads&limit=2&offset=2
@@ -55,7 +55,7 @@ class GetAuthorController
                         ResponseView::full($output)
                     );
                 } else {
-                    Utils::log("Get author {$dbname}", (string) "Error on get author");
+                    Utils::log("Get author {$dbname}", (string) "Error to obtain data from {$dbname}");
                     MessageView::setError(
                         "Error to obtain data from {$dbname}"
                     );

@@ -54,15 +54,15 @@ class GetTitleController
 
                 // output
                 if ($output) {
-                    Utils::log("Get title {$dbname}", (string) "Success get title");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get title {$dbname}", (string) $msg);
                     ResponseView::json(
                         ResponseView::full($output)
                     );
                 } else {
-                    Utils::log("Get title {$dbname}", (string) "Error on get title");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get title {$dbname}", (string) $msg);
+                    MessageView::setError($msg);
                 }
 
             } catch (Exception $e) {

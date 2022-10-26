@@ -21,7 +21,7 @@ use Vendor\Utils\Utils as Utils;
 
 /**
  * Get token data
- * 
+ *
  * [url]api/get/[dbname]/?token=1
  */
 class GetTokenController
@@ -47,15 +47,15 @@ class GetTokenController
                 $output = $GetTokenModel->data($dbname, $token);
                 // output?
                 if ($output) {
-                    Utils::log("Get token {$dbname}", (string) "Success get token");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get token {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::single($output)
                     );
                 } else {
-                    Utils::log("Get token {$dbname}", (string) "Error get token");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get token {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
             } catch (Exception $e) {
                 MessageView::setError($e->getMessage());

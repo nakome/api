@@ -76,27 +76,26 @@ class UpdateController
 
                     // output
                     if ($result) {
-                        Utils::log("Post data {$dbname}", (string) "Success post data");
+                        $msg = "Success, the data on {$dbname} has been updated!";
+                        Utils::log("Post data {$dbname}", (string)$msg);
                         ResponseView::json([
                             'STATUS' => $_SERVER['REDIRECT_STATUS'] ?? 200,
                             'IP' => Url::getIp(),
                             'HTTP_HOST' => $_SERVER['HTTP_HOST'],
                             'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
-                            'MESSAGE' => "Success, the data on {$dbname} has been updated!",
+                            'MESSAGE' => $msg,
                             'PARAMS' => $_GET,
                             'DATA' => $_POST,
                         ]);
                     } else {
-                        Utils::log("Post data {$dbname}", (string) "Error post data");
-                        ResponseView::json([
-                            'MESSAGE' => "Error, the data on {$dbname} has not updated!",
-                        ]);
+                        $msg = "Error, the data on {$dbname} has not updated!";
+                        Utils::log("Post data {$dbname}", (string)$msg);
+                        ResponseView::json(['MESSAGE' => $msg]);
                     }
                 } else {
-                    Utils::log("Post data {$dbname}", (string) "Error post data");
-                    ResponseView::json([
-                        'MESSAGE' => "Error, the data on {$dbname} has not updated!",
-                    ]);
+                    $msg = "Error, the data on {$dbname} has not updated!";
+                    Utils::log("Post data {$dbname}", (string)$msg);
+                    ResponseView::json(['MESSAGE' => $msg]);
                 }
             }
         }

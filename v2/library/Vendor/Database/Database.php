@@ -11,7 +11,7 @@ namespace Vendor\Database;
 /*
  * Prevenir accesso
  */
-defined('ACCESS') or exit(ACCESSINFO);
+defined('ACCESS') or exit('Sorry, you dont have access file.');
 
 use PDO;
 

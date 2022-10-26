@@ -21,7 +21,7 @@ use Vendor\Utils\Utils as Utils;
 
 /**
  * Get uid data
- * 
+ *
  * [url]api/get/[dbname]/?uid=1
  */
 class GetUidController
@@ -45,15 +45,15 @@ class GetUidController
 
                 // output
                 if ($output) {
-                    Utils::log("Get uid {$dbname}", (string) "Success get uid");
+                    $msg = "Success, to obtain data from {$dbname}";
+                    Utils::log("Get uid {$dbname}", (string)$msg);
                     ResponseView::json(
                         ResponseView::single($output)
                     );
                 } else {
-                    Utils::log("Get uid {$dbname}", (string) "Error get uid");
-                    MessageView::setError(
-                        "Error to obtain data from {$dbname}"
-                    );
+                    $msg = "Error to obtain data from {$dbname}";
+                    Utils::log("Get uid {$dbname}", (string)$msg);
+                    MessageView::setError($msg);
                 }
             } catch (Exception $e) {
                 MessageView::setError($e->getMessage());

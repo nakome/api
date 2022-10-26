@@ -11,7 +11,7 @@ namespace Vendor\Auth;
 /*
  * Prevenir accesso
  */
-defined('ACCESS') or die(ACCESSINFO);
+defined('ACCESS') or die('Sorry, you dont have access file.');
 
 /**
  * @author      Moncho Varela / Nakome <nakome@gmail.com>

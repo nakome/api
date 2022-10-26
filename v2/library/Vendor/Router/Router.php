@@ -11,10 +11,9 @@ namespace Vendor\Router;
 /*
  * Prevenir accesso
  */
-defined('ACCESS') or exit(ACCESSINFO);
+defined('ACCESS') or exit('Sorry, you dont have access file.');
 
 use Vendor\Url\Url as Url;
-
 
 /**
  * @author      Moncho Varela / Nakome <nakome@gmail.com>
@@ -63,12 +62,12 @@ class Router
         // Turn on output buffering
         ob_start();
         // launch
-        $url = $_SERVER['REQUEST_URI'];
+        $url = array_key_exists('REQUEST_URI', $_SERVER) ? $_SERVER['REQUEST_URI'] : '';
         $base = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-        if (strpos($url, $base) === 0) {
+        if (strpos((string)$url, $base) === 0) {
             $url = substr($url, strlen($base));
         }
-        $url = trim($url, '/');
+        $url = trim((string)$url, '/');
         foreach ($this->routes as $pattern => $callback) {
             if (preg_match($pattern, $url, $params)) {
                 array_shift($params);
@@ -81,8 +80,8 @@ class Router
             @header('Content-type: application/json');
             $arr = array(
                 'STATUS' => 404,
-                'HTTP_HOST' => $_SERVER['HTTP_HOST'],
-                'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'],
+                'HTTP_HOST' => array_key_exists('HTTP_HOST', $_SERVER) ? $_SERVER['HTTP_HOST'] : '',
+                'REQUEST_METHOD' => array_key_exists('REQUEST_METHOD', $_SERVER) ? $_SERVER['REQUEST_METHOD'] : '',
                 'OPTS' => $_GET,
             );
             exit(json_encode($arr));
