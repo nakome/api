@@ -185,6 +185,37 @@ class Api {
     return this.fetchData(url, config);
   }
 
+  /**
+   * Log info
+   * 
+   * @param string params 
+   * @returns 
+   */
+  log(params) {
+    const urlBase = this.config.url;
+    const url = `${urlBase}/log/${params}`;
+    const config = {
+      method: "GET",
+      headers: this.headers(),
+    };
+    return this.fetchDataText(url, config);
+  }
+
+  /**
+   * Token options
+   * 
+   * @param string params 
+   * @returns 
+   */
+   token(params) {
+    const urlBase = this.config.url;
+    const url = `${urlBase}/token/${params}`;
+    const config = {
+      method: "GET",
+      headers: this.headers(),
+    };
+    return this.fetchDataText(url, config);
+  }
 
   /**
    * Json headers

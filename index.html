@@ -80,7 +80,7 @@
      */
     const A = new Api({
       url: "http://localhost/api/v2",
-      token: "1234567890",
+      token: "e856285fd7c4c0635af8d47c276e09",
     });
 
     /**
@@ -110,6 +110,12 @@
       //await A.delete('testing', {uid:'1', token: '2412c2b6a05e6294b7952b0fefa645bc'}).then(checkResult);
       await print('Drop data');
       await A.drop('testing').then(checkResult);
+      await print('Show Log');
+      await A.log('show').then(r => print(r));
+      await print('Clean Log');
+      await A.log('clean').then(r => print(r));
+      await print('Generate Token');
+      await A.token('generate').then(r => print(r));
     }
 
     // run tasks

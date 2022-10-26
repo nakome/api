@@ -8,7 +8,7 @@ define('LIBRARY', ROOT_DIR.'/library');
 
 /* Token & url */
 define("URL","http://localhost/api/v1");
-define("TOKEN","1234567890");
+define("TOKEN","e856285fd7c4c0635af8d47c276e09");
 
 /* Database connection values */
 define("DB_TYPE", "sqlite");// sqlite,mysql

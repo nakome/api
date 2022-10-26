@@ -30,7 +30,10 @@ use App\Controllers\Get\GetUidController as GetUidController;
 use App\Controllers\Get\GetUpdatedController as GetUpdatedController;
 use App\Controllers\Insert\InsertController as InsertController;
 use App\Controllers\Update\UpdateController as UpdateController;
+use App\Controllers\Log\LogController as LogController;
+use App\Controllers\Token\TokenController as TokenController;
 use App\Views\MessageView as MessageView;
+use Vendor\Auth\Auth as Auth;
 use Vendor\Url\Url as Url;
 
 /**
@@ -116,6 +119,12 @@ class RouteController
 
                 // set error message if not call controller
                 MessageView::setError($errorMsg);
+                break;
+            case 'token':
+                TokenController::options($dbname);
+                break;
+            case 'log':
+                LogController::options($dbname);
                 break;
             default:
                 // set error message if not call controller
