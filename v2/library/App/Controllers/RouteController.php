@@ -13,21 +13,23 @@ namespace App\Controllers;
  */
 defined('ACCESS') or exit(ACCESSINFO);
 
-use App\Controllers\CreateController as CreateController;
-use App\Controllers\DeleteController as DeleteController;
-use App\Controllers\DropController as DropController;
-use App\Controllers\ExportController as ExportController;
-use App\Controllers\GetAllController as GetAllController;
-use App\Controllers\GetAuthorController as GetAuthorController;
-use App\Controllers\GetCategoryController as GetCategoryController;
-use App\Controllers\GetCreatedController as GetCreatedController;
-use App\Controllers\GetFilterController as GetFilterController;
-use App\Controllers\GetNameController as GetNameController;
-use App\Controllers\GetTitleController as GetTitleController;
-use App\Controllers\GetTokenController as GetTokenController;
-use App\Controllers\GetUidController as GetUidController;
-use App\Controllers\GetUpdatedController as GetUpdatedController;
-use App\Controllers\InsertController as InsertController;
+use App\Controllers\Create\CreateController as CreateController;
+use App\Controllers\Delete\DeleteController as DeleteController;
+use App\Controllers\Delete\DropController as DropController;
+use App\Controllers\Export\ExportController as ExportController;
+use App\Controllers\Get\GetAllController as GetAllController;
+use App\Controllers\Get\GetAuthorController as GetAuthorController;
+use App\Controllers\Get\GetCategoryController as GetCategoryController;
+use App\Controllers\Get\GetCreatedController as GetCreatedController;
+use App\Controllers\Get\GetFilterController as GetFilterController;
+use App\Controllers\Get\GetNameController as GetNameController;
+use App\Controllers\Get\GetPublicController as GetPublicController;
+use App\Controllers\Get\GetTitleController as GetTitleController;
+use App\Controllers\Get\GetTokenController as GetTokenController;
+use App\Controllers\Get\GetUidController as GetUidController;
+use App\Controllers\Get\GetUpdatedController as GetUpdatedController;
+use App\Controllers\Insert\InsertController as InsertController;
+use App\Controllers\Update\UpdateController as UpdateController;
 use Vendor\Url\Url as Url;
 
 /**
