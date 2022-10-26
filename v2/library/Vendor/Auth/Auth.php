@@ -76,4 +76,19 @@ class Auth
 
         return null;
     }
+
+    /**
+     * Generate Bearer token
+     *
+     * @param integer $length
+     * @return void
+     */
+    public function generateBearerToken(int $length = 20)
+    {
+        if ($length < 4) {
+            $length = 4;
+        }
+
+        return bin2hex(random_bytes(($length - ($length % 2)) / 2));
+    }
 }
