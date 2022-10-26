@@ -38,9 +38,13 @@ class Database
         $sqliteName = constant('DB_FILE');
         $mysql = "mysql:host=$host;dbname=$db;charset=$charset";
         $sqlite = "$dbtype:$sqliteName";
-        
+
         $pdo = null;
         if ($dbtype == 'sqlite') {
+            // check if not exists db file
+            if (!file_exists($sqliteName) && !is_file($sqliteName)) {
+                mkdir($sqliteName);
+            }
             if (in_array(constant('DB_TYPE'), PDO::getAvailableDrivers())) {
                 try {
                     $pdo = new PDO($sqlite, $user, $pass);
