@@ -34,7 +34,7 @@ class ExportController
                 $msg = "Success, table {$dbname} has been exported!";
                 Utils::log("Export {$dbname}", (string)$msg);
             } catch (Exception $e) {
-                MessageView::setMsg($e->getMessage());
+                MessageView::setMsg($e->getMessage(), '400');
             }
         }
     }

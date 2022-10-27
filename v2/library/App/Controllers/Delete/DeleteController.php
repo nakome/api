@@ -32,7 +32,7 @@ class DeleteController
         // init auth
         $auth = new Auth();
 
-        if ($auth->check() && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($auth->check() && $_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'DELETE') {
             // get post json params
             $_POST = json_decode(file_get_contents('php://input'), true);
 
@@ -55,7 +55,7 @@ class DeleteController
                 } else {
                     $msg = "Error, the data on {$dbname} has not deleted!";
                     Utils::log("Delete data {$dbname}", (string)$msg);
-                    MessageView::setMsg($msg);
+                    MessageView::setMsg($msg, '400');
                 }
             }
         }

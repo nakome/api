@@ -16,7 +16,7 @@ use Vendor\Utils\Utils as Utils;
 /**
  * Update controller
  *
- * [url]api/insert/[dbname]
+ * [url]api/updated/[dbname]
  */
 class UpdateController
 {
@@ -33,7 +33,7 @@ class UpdateController
         $auth = new Auth();
 
         // check auth
-        if ($auth->check() && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($auth->check() && $_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT') {
             $_POST = json_decode(file_get_contents('php://input'), true);
 
             // get params
@@ -75,12 +75,12 @@ class UpdateController
                     } else {
                         $msg = "Error, the data on {$dbname} has not updated!";
                         Utils::log("Post data {$dbname}", (string)$msg);
-                        MessageView::setMsg($msg);
+                        MessageView::setMsg($msg, '400');
                     }
                 } else {
                     $msg = "Error, the data on {$dbname} has not updated!";
                     Utils::log("Post data {$dbname}", (string)$msg);
-                    MessageView::setMsg($msg);
+                    MessageView::setMsg($msg, '400');
                 }
             }
         }

@@ -42,7 +42,7 @@ class CreateController
             } else {
                 $msg = "Error, the table {$dbname} has not created!";
                 Utils::log("Delete data {$dbname}", (string)$msg);
-                MessageView::setMsg($msg);
+                MessageView::setMsg($msg, '400');
             }
 
         }

@@ -40,7 +40,7 @@ class LogController
                 exit(die("The file not exists!"));
             }
         } else {
-            MessageView::setMsg("Error, You don't have access here.");
+            MessageView::setMsg("Error, You don't have access here.", '400');
         }
     }
 

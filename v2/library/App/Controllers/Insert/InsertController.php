@@ -6,6 +6,7 @@ namespace App\Controllers\Insert;
 
 defined('ACCESS') or exit(ACCESSINFO);
 
+use App\Models\Insert\ExistsTitleModel as ExistsTitleModel;
 use App\Models\Insert\InsertModel as InsertModel;
 use App\Views\MessageView as MessageView;
 use Vendor\Auth\Auth as Auth;
@@ -19,6 +20,7 @@ use Vendor\Utils\Utils as Utils;
  */
 class InsertController
 {
+
     /**
      * Static method to get data
      *
@@ -50,19 +52,27 @@ class InsertController
                     'content' => isset($_POST['content']) ? $_POST['content'] : '[]',
                 ];
 
-                // init model
-                $InsertModel = new InsertModel();
-                $result = $InsertModel->data($dbname, $data);
-
-                // output
-                if ($result) {
-                    $msg = "Success, the data on {$dbname} has been saved!";
-                    Utils::log("Post data {$dbname}", (string)$msg);
-                    MessageView::setMsg($msg);
+                // check if exists
+                $ExistsTitleModel = new ExistsTitleModel();
+                $checkIfTitleExists = $ExistsTitleModel->checkIfExists($dbname, $data['title']);
+                if (!$checkIfTitleExists) {
+                    // init model
+                    $InsertModel = new InsertModel();
+                    $result = $InsertModel->data($dbname, $data);
+                    // output
+                    if ($result) {
+                        $msg = "Success, the data on {$dbname} has been saved!";
+                        Utils::log("Post data {$dbname}", (string)$msg);
+                        MessageView::setMsg($msg);
+                    } else {
+                        $msg = "Error, the data on {$dbname} has not saved!";
+                        Utils::log("Post data {$dbname}", (string)$msg);
+                        MessageView::setMsg($msg);
+                    }
                 } else {
-                    $msg = "Error, the data on {$dbname} has not saved!";
+                    $msg = "Error, the title on {$dbname} already exists!";
                     Utils::log("Post data {$dbname}", (string)$msg);
-                    MessageView::setMsg($msg);
+                    MessageView::setMsg($msg,'400');
                 }
             }
         }

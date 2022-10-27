@@ -37,7 +37,7 @@ class ExistsTableModel
     ) {
 
         if (constant("DB_TYPE") == 'sqlite') {
-            //mysql
+            //sqlite
             $this->getConnection();
 
             $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='{$dbname}'";
@@ -46,7 +46,6 @@ class ExistsTableModel
             $output = $stmt->fetchAll();
             return $output;
         } else {
-            //mysql
             //mysql
             $this->getConnection();
 

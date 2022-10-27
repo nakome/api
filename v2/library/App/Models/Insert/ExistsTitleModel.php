@@ -8,12 +8,10 @@ defined('ACCESS') or exit(ACCESSINFO);
 
 use Vendor\Database\Database as Database;
 
-
-
 /**
  * Models
  */
-class InsertModel
+class ExistsTitleModel
 {
     private $__database;
 
@@ -29,21 +27,27 @@ class InsertModel
     }
 
     /**
-     * data
+     * Check if exists title
      *
      * @param string $dbname
-     * @param array $data
-     * @return boolean
+     * @param string $title
+     * @return void
      */
-    public function data(
+    public function checkIfExists(
         string $dbname,
-        array $data
+        string $title
     ): bool {
 
         $this->getConnection();
 
-        $sql = "INSERT INTO {$dbname} (name,author,author_info,title,description,category, public, token,content) VALUES (:name,:author,:author_info,:title,:description,:category,:public,:token,:content)";
-        $stmt = $this->__database->prepare($sql);
-        return $stmt->execute($data);
+        // check if title exists
+        $query = "SELECT * FROM {$dbname} WHERE title=:title";
+        $stmt = $this->__database->prepare($query);
+        $stmt->execute([":title" => $title]);
+        $result = $stmt->fetchAll();
+        if (count($result) > 0) {
+            return true;
+        }
+        return false;
     }
 }

@@ -65,12 +65,12 @@ class GetFilterController
                     } else {
                         $msg = "Error to filter data from {$dbname}";
                         Utils::log("Filter data {$dbname}", (string)$msg);
-                        MessageView::setMsg($msg);
+                        MessageView::setMsg($msg, '400');
                     }
                 }
 
             } catch (Exception $e) {
-                MessageView::setMsg($e->getMessage());
+                MessageView::setMsg($e->getMessage(), '400');
             }
         }
     }

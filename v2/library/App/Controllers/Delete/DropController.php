@@ -43,7 +43,7 @@ class DropController
             } else {
                 $msg = "Error, the table {$dbname} has not deleted!";
                 Utils::log("Drop {$dbname}", (string)$msg);
-                MessageView::setMsg($msg);
+                MessageView::setMsg($msg, '400');
             }
         }
     }

@@ -52,11 +52,11 @@ class GetCategoryController
                 } else {
                     $msg = "Error to obtain data from {$dbname}";
                     Utils::log("Get category {$dbname}", (string)$msg);
-                    MessageView::setMsg($msg);
+                    MessageView::setMsg($msg, '400');
                 }
 
             } catch (Exception $e) {
-                MessageView::setMsg($e->getMessage());
+                MessageView::setMsg($e->getMessage(), '400');
             }
         }
     }
