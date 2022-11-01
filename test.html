@@ -70,7 +70,7 @@
 
   <div id="output"></div>
 
-  <script type="text/javascript" src="./demo-app/src/controllers/api.js"></script>
+  <script type="text/javascript" src="./api.js"></script>
   <script type="text/javascript" rel="javascript">
 
     let output = document.getElementById('output');
@@ -79,7 +79,7 @@
      * Init api
      */
     const A = new Api({
-      url: "http://localhost/api/v2",
+      url: "http://localhost:8080/v2",
       token: "e856285fd7c4c0635af8d47c276e09",
     });
 

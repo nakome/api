@@ -7,7 +7,7 @@ define('ROOT_DIR',str_replace(DIRECTORY_SEPARATOR, '/', getcwd()));
 define('LIBRARY', ROOT_DIR.'/library');
 
 /* Token & url */
-define("URL","http://localhost/api/v2");
+define("URL","http://localhost:8080/v2");
 define("TOKEN","e856285fd7c4c0635af8d47c276e09");
 
 /* Database connection values */

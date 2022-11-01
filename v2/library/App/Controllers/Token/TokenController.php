@@ -19,7 +19,7 @@ class TokenController
     private static function __generate()
     {
         $auth = new Auth();
-        $token = $auth->generateBearerToken(20);
+        $token = $auth->generateBearerToken(100);
         $output = "Success, the token is {$token}";
         exit(die($output));
     }

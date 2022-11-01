@@ -28,6 +28,7 @@ class InitView
     public function routes()
     {
         $R = $this->router;
+        // api routes
         $R->route(
             [
                 '/(:any)',

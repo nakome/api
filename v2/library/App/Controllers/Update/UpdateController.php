@@ -59,10 +59,11 @@ class UpdateController
                         'category' => isset($_POST['category']) ? $_POST['category'] : $row['category'],
                         'public' => isset($_POST['public']) ? $_POST['public'] : $row['public'],
                         'token' => bin2hex(openssl_random_pseudo_bytes(16)),
-                        'content' => isset($_POST['content']) ? $_POST['content'] : $row['content'],
+                        'content' => isset($_POST['content']) ? json_encode($_POST['content']) : $row['content'],
                         'created' => $row['created'],
                         'updated' => date("Y-m-d H:i:s"),
                     ];
+
                     // init model
                     $UpdateModel = new UpdateModel();
                     $result = $UpdateModel->data($dbname, $data, $uid);

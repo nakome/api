@@ -28,6 +28,7 @@ use App\Controllers\Update\UpdateController as UpdateController;
 use App\Models\Create\ExistsTableModel as ExistsTableModel;
 use App\Views\MessageView as MessageView;
 use Vendor\Url\Url as Url;
+use Vendor\Utils\Utils as Utils;
 
 /**
  * Routes Controller
@@ -85,7 +86,7 @@ class RouteController
                 if (self::__checkIfTableExists($dbname)) {
                     InsertController::data($dbname);
                 } else {
-                    MessageView::setMsg("The table {$dbname} not exists!");
+                    MessageView::setMsg("The table {$dbname} not exists!",'666');
                 }
                 // set error message if not call controller
                 MessageView::setMsg($errorMsg);
@@ -94,7 +95,7 @@ class RouteController
                 if (self::__checkIfTableExists($dbname)) {
                     UpdateController::data($dbname);
                 } else {
-                    MessageView::setMsg("The table {$dbname} not exists!");
+                    MessageView::setMsg("The table {$dbname} not exists!",'666');
                 }
                 // set error message if not call controller
                 MessageView::setMsg($errorMsg);
@@ -103,7 +104,7 @@ class RouteController
                 if (self::__checkIfTableExists($dbname)) {
                     DeleteController::data($dbname);
                 } else {
-                    MessageView::setMsg("The table {$dbname} not exists!");
+                    MessageView::setMsg("The table {$dbname} not exists!",'666');
                 }
                 // set error message if not call controller
                 MessageView::setMsg($errorMsg);
@@ -121,7 +122,7 @@ class RouteController
                     GetUpdatedController::data($dbname);
                     GetPublicController::data($dbname);
                 } else {
-                    MessageView::setMsg("The table {$dbname} not exists!");
+                    MessageView::setMsg("The table {$dbname} not exists!",'666');
                 }
                 // set error message if not call controller
                 MessageView::setMsg($errorMsg);
@@ -130,7 +131,7 @@ class RouteController
                 if (self::__checkIfTableExists($dbname)) {
                     GetFilterController::data($dbname);
                 } else {
-                    MessageView::setMsg("The table {$dbname} not exists!");
+                    MessageView::setMsg("The table {$dbname} not exists!",'666');
                 }
                 // set error message if not call controller
                 MessageView::setMsg($errorMsg);
@@ -139,14 +140,14 @@ class RouteController
                 if (self::__checkIfTableExists($dbname)) {
                     ExportController::data($dbname);
                 } else {
-                    MessageView::setMsg("The table {$dbname} not exists!");
+                    MessageView::setMsg("The table {$dbname} not exists!",'666');
                 }
                 break;
             case 'drop':
                 if (self::__checkIfTableExists($dbname)) {
                     DropController::data($dbname);
                 } else {
-                    MessageView::setMsg("The table {$dbname} not exists!");
+                    MessageView::setMsg("The table {$dbname} not exists!",'666');
                 }
                 // set error message if not call controller
                 MessageView::setMsg($errorMsg);

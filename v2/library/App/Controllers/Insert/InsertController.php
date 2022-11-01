@@ -49,7 +49,7 @@ class InsertController
                     'category' => isset($_POST['category']) ? $_POST['category'] : 'default',
                     'public' => isset($_POST['public']) ? $_POST['public'] : (string) 0,
                     'token' => bin2hex(openssl_random_pseudo_bytes(16)),
-                    'content' => isset($_POST['content']) ? $_POST['content'] : '[]',
+                    'content' => isset($_POST['content']) ? json_encode($_POST['content']) : '[]',
                 ];
 
                 // check if exists
