@@ -1,6 +1,5 @@
 <script>
   import { push,link } from "svelte-spa-router";
-
   // controllers
   import DbConnect from "../../controllers/api";
   // config
@@ -18,7 +17,7 @@
   export let params;
 
   // get api data
-  let data = getData();
+  let {address,subject,date,text,closing,name} = getData();
 
   /**
    * Update data
@@ -83,28 +82,28 @@
           <span class="country">{Config.country}</span>
         {/if}
       </section>
-      <section class="to" contenteditable bind:innerHTML={data.address}>
-        {data.address}
+      <section class="to" contenteditable bind:innerHTML={address}>
+        {address}
       </section>
     </section>
   </header>
 
   <main class="main">
-    <section class="subject" contenteditable bind:innerHTML={data.subject}>
-      {data.subject}
+    <section class="subject" contenteditable bind:innerHTML={subject}>
+      {subject}
     </section>
-    <section class="date" contenteditable bind:innerHTML={data.date}>
-      {data.date}
+    <section class="date" contenteditable bind:innerHTML={date}>
+      {date}
     </section>
-    <section class="text" contenteditable bind:innerHTML={data.text}>
-      {data.text}
+    <section class="text" id="editor" contenteditable bind:innerHTML={text}>
+      {text}
     </section>
     <section class="signature">
-      <span class="closing" contenteditable bind:innerHTML={data.closing}>
-        {data.closing}
+      <span class="closing" contenteditable bind:innerHTML={closing}>
+        {closing}
       </span>
-      <span class="name" contenteditable bind:innerHTML={data.name}>
-        {data.name}
+      <span class="name" contenteditable bind:innerHTML={name}>
+        {name}
       </span>
       {#if Config.signature}
         <img src={Config.signature} alt="signature" />
@@ -196,7 +195,7 @@
   .letter {
     position: relative;
     display: block;
-    background: #fff;
+    background: var(--light-1);
     width: 210mm;
     height: 297mm;
     padding: 20mm;
@@ -209,7 +208,7 @@
     left: 0;
     width: 5mm;
     height: 0;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--light-3);
   }
   .letter:before {
     top: 105mm;
@@ -296,7 +295,7 @@
     display: block;
   }
   .footer .label {
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--black-3);
     display: inline-block;
     width: 10mm;
   }

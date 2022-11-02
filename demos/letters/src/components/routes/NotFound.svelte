@@ -2,7 +2,6 @@
   import { link } from "svelte-spa-router";
   // ux components
   import Info from "../ux/Info.svelte";
-
 </script>
 
 

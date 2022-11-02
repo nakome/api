@@ -2,6 +2,8 @@
   import Router from "svelte-spa-router";
   import { wrap } from "svelte-spa-router/wrap";
 
+  import Config from "../storage/config";
+
   // routes
   import Home from "./routes/Home.svelte";
   import Edit from "./routes/Edit.svelte";
@@ -17,5 +19,10 @@
     "*": wrap({ component: NotFound }),
   };
 </script>
+
+
+<svelte:head>
+	<title>{Config.appName} - 🚀</title>
+</svelte:head>
 
 <Router {routes} />

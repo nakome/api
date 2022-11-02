@@ -59,11 +59,6 @@
 <Notification active={nActive} title={nTitle} desc={nDesc} type={nType} />
 
 <style>
-  .h3 {
-    color: var(--red-1);
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
   button,
   a {
     font-weight: bold;

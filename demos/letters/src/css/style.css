@@ -1,15 +1,15 @@
-:root{
-  --blue-1: #ecf3ff;
-  --blue-2: #4a8cf5;
-  --blue-3: #295aa9;
+:root {
+  --blue-1: #e3f2fd;
+  --blue-2: #2196f3;
+  --blue-3: #1976d2;
 
-  --red-1: #ffefef;
-  --red-2: #ff7979;
-  --red-3: #ff3d3d;
+  --red-1: #ffebee;
+  --red-2: #f44336;
+  --red-3: #d32f2f;
 
-  --light-1: #FFFFFF;
-  --light-2: #fffbf9;
-  --light-3: #fff7f0;
+  --light-1: #ffffff;
+  --light-2: #f7f7f7;
+  --light-3: #e7e7e7;
 
   --black-1: #727272;
   --black-2: #3a3a3a;
@@ -31,17 +31,20 @@
   line-height: var(--line-height);
   box-sizing: border-box;
 }
+
 ::selection {
-  background: var(--black-3);
-  color: var(--light);
+  background: var(--black-2);
+  color: var(--light-1);
 }
 
 @page {
   margin: 0;
 }
+
 html {
   background: var(--light-2);
 }
+
 [contenteditable]:focus,
 [contenteditable]:hover {
   outline: 2mm solid var(--light-2);
@@ -52,12 +55,14 @@ html {
   html {
     background: var(--light-1);
   }
+
   html,
   body {
     width: 210mm;
     height: 100%;
     overflow: hidden;
   }
+
   [contenteditable] {
     background: none;
     outline: 0;

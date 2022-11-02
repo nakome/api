@@ -4,7 +4,7 @@
 
 <style>
   .card {
-    max-width: 160mm;
+    max-width: calc(100% - 10mm);
     margin: 10mm auto;
     padding: 2mm;
   }
