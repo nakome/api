@@ -1,11 +1,13 @@
 <script>
-  import { push,link } from "svelte-spa-router";
+  import { onMount } from "svelte";
+  import { push, link } from "svelte-spa-router";
   // controllers
   import DbConnect from "../../controllers/api";
   // config
   import Config from "../../storage/Config";
   // ux components
   import Notification from "../ux/Notification.svelte";
+  import Loading from "../ux/Loading.svelte";
 
   // notification values
   let nActive = "";
@@ -16,8 +18,10 @@
   // export params
   export let params;
 
-  // get api data
-  let {address,subject,date,text,closing,name} = getData();
+  let data;
+  let error;
+
+  onMount(async () => getData());
 
   /**
    * Update data
@@ -58,23 +62,78 @@
    * Get data
    */
   async function getData() {
-    const resp = await DbConnect.get("letters", `uid=${params.uid}`);
-    data = JSON.parse(resp.DATA.content);
-    return data;
+    try {
+      const resp = await DbConnect.get("letters", `uid=${params.uid}`);
+      data = await JSON.parse(resp.DATA.content);
+      if (data) {
+        return data;
+      } else {
+        throw new Error(data);
+      }
+    } catch (e) {
+      error = e;
+    }
   }
 </script>
 
-<header>
-  <section class="card">
-    <button class="btn" on:click={updateData}>Save</button>
-    <a class="btn" href="/" use:link>Back</a>
-  </section>
-</header>
+{#if error}
+  <Notification active={true} title="Error" desc={error} type="error" />
+{:else if data}
 
-<main class="letter">
-  <header class="header">
-    <section class="address">
-      <section class="from">
+  <header>
+    <section class="card">
+      <button class="btn" on:click={updateData}>Save</button>
+      <a class="btn" href="/" use:link>Back</a>
+    </section>
+  </header>
+
+  <main class="letter">
+    <header class="header">
+      <section class="address">
+        <section class="from">
+          <span class="name">{Config.name}</span>
+          <span class="street">{Config.street}</span>
+          <span class="city">{Config.city}</span>
+          {#if Config.country}
+            <span class="country">{Config.country}</span>
+          {/if}
+        </section>
+        <section class="to" contenteditable bind:innerHTML={data.address}>
+          {data.address}
+        </section>
+      </section>
+    </header>
+
+    <main class="main">
+      <section class="subject" contenteditable bind:innerHTML={data.subject}>
+        {data.subject}
+      </section>
+      <section class="date" contenteditable bind:innerHTML={data.date}>
+        {data.date}
+      </section>
+      <section
+        class="text"
+        id="editor"
+        contenteditable
+        bind:innerHTML={data.text}
+      >
+        {data.text}
+      </section>
+      <section class="signature">
+        <span class="closing" contenteditable bind:innerHTML={data.closing}>
+          {data.closing}
+        </span>
+        <span class="name" contenteditable bind:innerHTML={data.name}>
+          {data.name}
+        </span>
+        {#if Config.signature}
+          <img src={Config.signature} alt="signature" />
+        {/if}
+      </section>
+    </main>
+
+    <footer class="footer">
+      <section class="address">
         <span class="name">{Config.name}</span>
         <span class="street">{Config.street}</span>
         <span class="city">{Config.city}</span>
@@ -82,114 +141,79 @@
           <span class="country">{Config.country}</span>
         {/if}
       </section>
-      <section class="to" contenteditable bind:innerHTML={address}>
-        {address}
-      </section>
-    </section>
-  </header>
 
-  <main class="main">
-    <section class="subject" contenteditable bind:innerHTML={subject}>
-      {subject}
-    </section>
-    <section class="date" contenteditable bind:innerHTML={date}>
-      {date}
-    </section>
-    <section class="text" id="editor" contenteditable bind:innerHTML={text}>
-      {text}
-    </section>
-    <section class="signature">
-      <span class="closing" contenteditable bind:innerHTML={closing}>
-        {closing}
-      </span>
-      <span class="name" contenteditable bind:innerHTML={name}>
-        {name}
-      </span>
-      {#if Config.signature}
-        <img src={Config.signature} alt="signature" />
+      <section class="contact">
+        {#if Config.phone}
+          <section class="phone">
+            <span class="label">{Config.labels.phone}</span>
+            {Config.phone}
+          </section>
+        {/if}
+
+        {#if Config.email}
+          <section class="email">
+            <span class="label">{Config.labels.email}</span>
+            {Config.email}
+          </section>
+        {/if}
+
+        {#if Config.website}
+          <section class="website">
+            <span class="label">{Config.labels.website}</span>
+            {Config.website}
+          </section>
+        {/if}
+      </section>
+
+      {#if Config.bank}
+        <section class="bank">
+          {#if Config.bank}
+            <section class="name">
+              <span class="label">{Config.labels.bank}</span>
+              {Config.bank}
+            </section>
+          {/if}
+
+          {#if Config.iban}
+            <section class="name">
+              <span class="label">{Config.labels.iban}</span>
+              {Config.iban}
+            </section>
+          {/if}
+
+          {#if Config.bic}
+            <section class="name">
+              <span class="label">{Config.labels.bic}</span>
+              {Config.bic}
+            </section>
+          {/if}
+        </section>
       {/if}
-    </section>
+
+      {#if Config.vatId || Config.taxId}
+        <section class="info">
+          {#if Config.vatId}
+            <section class="name">
+              <span class="label">{Config.labels.vatId}</span>
+              {Config.vatId}
+            </section>
+          {/if}
+
+          {#if Config.taxId}
+            <section class="name">
+              <span class="label">{Config.labels.taxId}</span>
+              {Config.taxId}
+            </section>
+          {/if}
+        </section>
+      {/if}
+    </footer>
   </main>
 
-  <footer class="footer">
-    <section class="address">
-      <span class="name">{Config.name}</span>
-      <span class="street">{Config.street}</span>
-      <span class="city">{Config.city}</span>
-      {#if Config.country}
-        <span class="country">{Config.country}</span>
-      {/if}
-    </section>
-
-    <section class="contact">
-      {#if Config.phone}
-        <section class="phone">
-          <span class="label">{Config.labels.phone}</span>
-          {Config.phone}
-        </section>
-      {/if}
-
-      {#if Config.email}
-        <section class="email">
-          <span class="label">{Config.labels.email}</span>
-          {Config.email}
-        </section>
-      {/if}
-
-      {#if Config.website}
-        <section class="website">
-          <span class="label">{Config.labels.website}</span>
-          {Config.website}
-        </section>
-      {/if}
-    </section>
-
-    {#if Config.bank}
-      <section class="bank">
-        {#if Config.bank}
-          <section class="name">
-            <span class="label">{Config.labels.bank}</span>
-            {Config.bank}
-          </section>
-        {/if}
-
-        {#if Config.iban}
-          <section class="name">
-            <span class="label">{Config.labels.iban}</span>
-            {Config.iban}
-          </section>
-        {/if}
-
-        {#if Config.bic}
-          <section class="name">
-            <span class="label">{Config.labels.bic}</span>
-            {Config.bic}
-          </section>
-        {/if}
-      </section>
-    {/if}
-
-    {#if Config.vatId || Config.taxId}
-      <section class="info">
-        {#if Config.vatId}
-          <section class="name">
-            <span class="label">{Config.labels.vatId}</span>
-            {Config.vatId}
-          </section>
-        {/if}
-
-        {#if Config.taxId}
-          <section class="name">
-            <span class="label">{Config.labels.taxId}</span>
-            {Config.taxId}
-          </section>
-        {/if}
-      </section>
-    {/if}
-  </footer>
-</main>
-
-<Notification active={nActive} title={nTitle} desc={nDesc} type={nType} />
+  <Notification active={nActive} title={nTitle} desc={nDesc} type={nType} />
+{:else}
+  <Loading msg="Loading data..." />
+{/if}
 
 <style>
   .letter {
@@ -313,41 +337,41 @@
     z-index: 100;
   }
 
-  a,.btn {
+  a,
+  .btn {
     display: inline-block;
     padding: 3mm;
     line-height: 3mm;
     cursor: pointer;
     text-transform: capitalize;
-    text-decoration:none;
+    text-decoration: none;
     background: var(--blue-2);
     border: 1px solid var(--blue-3);
     color: var(--blue-1) !important;
     margin-bottom: 2mm;
     border-radius: 0.5mm;
-    transition:all 500ms ease;
+    transition: all 500ms ease;
   }
   a:hover,
   a:focus,
   .btn:hover,
-  .btn:focus{
+  .btn:focus {
     background: var(--blue-1);
     border: 1px solid var(--blue-2);
     color: var(--blue-3) !important;
-    transition:all 500ms ease;
+    transition: all 500ms ease;
   }
 
   a:last-child {
     background: var(--red-3);
     border: 1px solid var(--red-3);
-    color: var(--red-1)!important;
+    color: var(--red-1) !important;
   }
 
   a:last-child:hover,
   a:last-child:focus {
     background: var(--red-1);
     border: 1px solid var(--red-3);
-    color: var(--red-3)!important;
+    color: var(--red-3) !important;
   }
-
 </style>

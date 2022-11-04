@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { link } from "svelte-spa-router";
 
   // controllers
@@ -16,7 +17,7 @@
   let data = [];
   let loading = false;
 
-  getTable();
+  onMount(() => getTable());
 
   /**
    * Handle button create
@@ -47,7 +48,7 @@
 </script>
 
 {#if !loading}
-  <Loading msg="Processing.." />
+  <Loading msg="Loading..." />
 {:else}
   {#await data}
     <Loading msg="Loading data..." />

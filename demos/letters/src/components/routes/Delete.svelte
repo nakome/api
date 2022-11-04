@@ -66,6 +66,7 @@
     background: var(--blue-2);
     border: 1px solid var(--blue-3);
     color: var(--blue-1);
+    cursor:pointer;
   }
   a {
     display: inline-block;
