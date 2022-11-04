@@ -10,14 +10,22 @@
   import Card from "../ux/Card.svelte";
   import Table from "../ux/Table.svelte";
 
+
   // config
   import { getContext } from "svelte";
   const config = getContext("config");
 
   let data = [];
+  let limit = 6;
+  let total;
+  let offset = 0;
   let loading = false;
 
-  onMount(() => getTable());
+  onMount(() => getTable(limit, 0));
+
+  function handlePagination(pages,num) {
+    getTable(pages, num);
+  }
 
   /**
    * Handle button create
@@ -30,9 +38,13 @@
   /**
    * Get table
    */
-  async function getTable() {
-    const resp = await DbConnect.get("letters", "all=1");
+  async function getTable(limit, offset) {
+    const resp = await DbConnect.get(
+      "letters",
+      `all=1&limit=${limit}&offset=${offset}`
+    );
     data = resp;
+    total = data.TOTAL;
     loading = true;
   }
 
@@ -60,7 +72,7 @@
     {:else if data.STATUS === 200}
       <Card>
         <a class="btn" use:link href="/new">create a new Letter</a>
-        <Table {data} />
+        <Table {data} {total} {offset} {limit} {handlePagination}/>
       </Card>
     {:else}
       <Info msg={data.MESSAGE}>

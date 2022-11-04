@@ -99,7 +99,8 @@ class ResponseView
      * @return object
      */
     public static function json(
-        array $output = []
+        array $output = [],
+        int $total = 0
     ): object {
         @header('Content-type: application/json');
         exit(json_encode([
@@ -108,7 +109,7 @@ class ResponseView
             'HTTP_HOST' => $_SERVER['HTTP_HOST'] ?? 'localhost',
             'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'] ?? 'GET',
             'PARAMS' => $_GET,
-            'TOTAL' => count($output),
+            'TOTAL' => $total ? $total : count($output),
             'DATA' => $output ?? [],
         ]));
     }

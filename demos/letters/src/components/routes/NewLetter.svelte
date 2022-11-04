@@ -20,6 +20,7 @@
    * Save letter
    */
   function saveLetter() {
+    
     let data = {
       title: title,
       description: description,
@@ -33,8 +34,10 @@
         text: "<div><br></div><div>Dear\u2026<br></div><div><br></div><div><div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</div></div>",
       },
     };
+
     // more than 5 letters
     if (title.length > 5 && description.length > 5) {
+      
       // insert data
       DbConnect.insert("letters", data).then((r) => {
         // show msg depends of status
@@ -63,6 +66,8 @@
             nType = "";
             clearTimeout(w);
           }, 2000);
+        }else{
+          console.log(r);
         }
       });
     }
@@ -81,7 +86,7 @@
       required
     />
     
-    {#if title.length < 5}
+    {#if title.length < 6}
       <div class="error-fill">Please write a title</div>
     {:else}
       <div class="success-fill">Nice job 😀</div>
@@ -94,7 +99,7 @@
       bind:value={description}
       required
     />
-    {#if description.length < 5}
+    {#if description.length < 6}
       <div class="error-fill">Please write a description</div>
     {:else}
       <div class="success-fill">Nice job 😀</div>

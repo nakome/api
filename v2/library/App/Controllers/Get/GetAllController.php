@@ -6,6 +6,7 @@ namespace App\Controllers\Get;
 
 defined('ACCESS') or exit(ACCESSINFO);
 
+use App\Models\Get\GetTotalModel as GetTotalModel;
 use App\Models\Get\GetAllModel as GetAllModel;
 use App\Views\MessageView as MessageView;
 use App\Views\ResponseView as ResponseView;
@@ -37,16 +38,20 @@ class GetAllController
                 $limit = (isset($_GET["limit"])) ? (string)urldecode($_GET["limit"]) : (string) 15;
                 $offset = (isset($_GET["offset"])) ? (string)urldecode($_GET["offset"]) : (string) 0;
 
+                $GetTotalModel = new GetTotalModel();
+                $total = $GetTotalModel->data($dbname);
+
                 // new model
                 $GetAllModel = new GetAllModel();
                 $output = $GetAllModel->data($dbname, $limit, $offset);
 
-                // if output
+                // if output    
                 if ($output) {
                     $msg = "Success to obtain data from {$dbname}";
                     Utils::log("Get all {$dbname}", (string)$msg);
                     ResponseView::json(
-                        ResponseView::full($output)
+                        ResponseView::full($output),
+                        (int) $total['total']
                     );
                 } else {
                     $msg = "Error to obtain data from {$dbname}";
